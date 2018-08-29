@@ -51,7 +51,7 @@ jt.withProcedureName("customerprocedure").
                   c.setCid(Integer.parseInt(map5.get("id").toString()));
                   c.setFirstname((String)map5.get("firstname"));
                   c.setLastname((String)map5.get("lname"));
-                  
+                  //Sysout
                   
      System.out.println(list);
 		
