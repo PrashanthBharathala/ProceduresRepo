@@ -62,45 +62,44 @@ jt.withProcedureName("customerprocedure").
 	
 
 
-	public Map<String,Integer> getAllCount(String userid,String role){
+	public DashBoard_Pojo getAllCount(String userid,String role){
 		
 		
 		//Customer c=new Customer();
 		
 jt.withProcedureName("Hlm_sp_getDashBoard").
  declareParameters(
-		     new SqlParameter("p_userid",Types.VARCHAR),
-		     new SqlParameter("p_userrole",Types.VARCHAR),
-		       new SqlOutParameter("p_cursor", OracleTypes.CURSOR),
-               new SqlOutParameter("p_cusror1", OracleTypes.CURSOR),
-               new SqlOutParameter("p_cusror2", OracleTypes.CURSOR),
-               new SqlOutParameter("p_cusror3", OracleTypes.CURSOR));
+		     new SqlParameter("P_UserId",Types.VARCHAR),
+		     new SqlParameter("P_UserRole",Types.VARCHAR),
+		       new SqlOutParameter("P_Cur", OracleTypes.CURSOR),
+               new SqlOutParameter("P_Cur1", OracleTypes.CURSOR),
+               new SqlOutParameter("P_Cur2", OracleTypes.CURSOR),
+               new SqlOutParameter("P_Cur3", OracleTypes.CURSOR));
 
        Map<String, Object> map=new HashMap<>();
-       map.put("p_userid", userid);
-       map.put("p_userrole", role);
+       map.put("P_UserId", userid);
+       map.put("P_UserRole", role);
        Map<String, Object> map1=  jt.execute(map);
       
-             int topiccount=(int)  map1.get("p_cursor");
+             int topiccount=(int)  map1.get("P_Cur");
                  System.out.println(topiccount);
                  
                  
-                 int rolecount=(int)  map1.get("p_cusror1");
+                 int rolecount=(int)  map1.get("P_Cur1");
                  System.out.println(rolecount);
                  
-                 int actioncount=(int)  map1.get("p_cusror2");
+                 int actioncount=(int)  map1.get("P_Cur2");
                  System.out.println(actioncount);
                  
-                 int authcount=(int)  map1.get("p_cusror3");
+                 int authcount=(int)  map1.get("P_Cur3");
                  System.out.println(authcount);
+              DashBoard_Pojo da=new DashBoard_Pojo();
+              da.setRuleCount(rolecount);
+              da.setTopicCount(topiccount);
+              da.setActionCount(actioncount);
+              da.setAuthCount(authcount);
                  
-                 Map<String,Integer> map3=new HashMap<>();
-                 map3.put("topiccount", topiccount);
-                 map3.put("rolecount", rolecount);
-                 map3.put("actioncount", actioncount);
-                 map3.put("authcount", authcount);
-                 
-               return map3;  
+               return da;  
                  
                
                //2nd process if above not works
