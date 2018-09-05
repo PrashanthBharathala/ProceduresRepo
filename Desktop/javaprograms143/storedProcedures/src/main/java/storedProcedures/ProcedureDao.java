@@ -58,6 +58,68 @@ jt.withProcedureName("customerprocedure").
 		
 		return c;
 	}
+	
+	
+
+
+	public Map<String,Integer> getAllCount(String userid,String role){
+		
+		
+		//Customer c=new Customer();
+		
+jt.withProcedureName("Hlm_sp_getDashBoard").
+ declareParameters(
+		     new SqlParameter("p_userid",Types.VARCHAR),
+		     new SqlParameter("p_userrole",Types.VARCHAR),
+		       new SqlOutParameter("p_cursor", OracleTypes.CURSOR),
+               new SqlOutParameter("p_cusror1", OracleTypes.CURSOR),
+               new SqlOutParameter("p_cusror2", OracleTypes.CURSOR),
+               new SqlOutParameter("p_cusror3", OracleTypes.CURSOR));
+
+       Map<String, Object> map=new HashMap<>();
+       map.put("p_userid", userid);
+       map.put("p_userrole", role);
+       Map<String, Object> map1=  jt.execute(map);
+      
+             int topiccount=(int)  map1.get("p_cursor");
+                 System.out.println(topiccount);
+                 
+                 
+                 int rolecount=(int)  map1.get("p_cusror1");
+                 System.out.println(rolecount);
+                 
+                 int actioncount=(int)  map1.get("p_cusror2");
+                 System.out.println(actioncount);
+                 
+                 int authcount=(int)  map1.get("p_cusror3");
+                 System.out.println(authcount);
+                 
+                 Map<String,Integer> map3=new HashMap<>();
+                 map3.put("topiccount", topiccount);
+                 map3.put("rolecount", rolecount);
+                 map3.put("actioncount", actioncount);
+                 map3.put("authcount", authcount);
+                 
+               return map3;  
+                 
+               
+               //2nd process if above not works
+           /*    
+               
+               List<Map<String,Object>> list =  (List<Map<String, Object>>) map1.get("p_cursor");
+               System.out.println(list);
+                 
+                  Map<String,Object> map5=list.get(0);
+                  //this will return all keys present in the table(cursour)
+                  System.out.println(map5.keySet());
+                  
+                  System.out.println(map5.get("TopicCount"));
+                  //retriving values from map
+               
+		
+		
+		return ;*/
+	}
 
 
 
