@@ -1,7 +1,8 @@
 package storedProcedures;
 
 
-import java.math.BigDecimal;
+
+import java.sql.Date;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +40,9 @@ jt.withProcedureName("customerprocedure").
        map.put("hashvalue", hash);
        Map<String, Object> map1=  jt.execute(map);
        //This is retriving cursor object(i.e is table data)
+       
+       Map<String,Object> newmap =   (Map<String, Object>) map1.get("paramoutput");
+       
                   List<Map<String,Object>> list =  (List<Map<String, Object>>) map1.get("paramoutput");
                  System.out.println(list);
                   Map<String,Object> map5=list.get(0);
@@ -48,6 +52,28 @@ jt.withProcedureName("customerprocedure").
                   System.out.println(map5.get("id"));
                   //retriving values from map
                   
+                  Customer c1=new Customer();
+             
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+               
                   c.setCid(Integer.parseInt(map5.get("id").toString()));
                   c.setFirstname((String)map5.get("firstname"));
                   c.setLastname((String)map5.get("lname"));
@@ -80,6 +106,7 @@ jt.withProcedureName("Hlm_sp_getDashBoard").
        map.put("P_UserId", userid);
        map.put("P_UserRole", role);
        Map<String, Object> map1=  jt.execute(map);
+       
       
              int topiccount=(int)  map1.get("P_Cur");
                  System.out.println(topiccount);
@@ -105,22 +132,103 @@ jt.withProcedureName("Hlm_sp_getDashBoard").
                //2nd process if above not works
            /*    
                
-               List<Map<String,Object>> list =  (List<Map<String, Object>>) map1.get("p_cursor");
+              
+              
+               List<Map<String,Object>> list =  (List<Map<String, Object>>) map1.get("P_Cur");
                System.out.println(list);
                  
                   Map<String,Object> map5=list.get(0);
                   //this will return all keys present in the table(cursour)
                   System.out.println(map5.keySet());
                   
-                  System.out.println(map5.get("TopicCount"));
-                  //retriving values from map
+                  System.out.println((int)map5.get("TopicCount"));
+                  
+                  
+                   List<Map<String,Object>> list1 =  (List<Map<String, Object>>) map1.get("P_Cur1");
+               System.out.println(list1);
+                 
+                  Map<String,Object> map6=list1.get(0);
+                  //this will return all keys present in the table(cursour)
+                  System.out.println(map6.keySet());
+                  
+                  System.out.println(map6.get("TopicCount"));
                
 		
 		
-		return ;*/
+		 
+                 DashBoard_Pojo da=new DashBoard_Pojo();
+              da.setRuleCount(rolecount);
+              da.setTopicCount((int)map5.get("TopicCount"));
+              da.setActionCount(actioncount);
+              da.setAuthCount(authcount);
+              
+		
+		return  da;*/
 	}
 
 
+	
+	//get last login
+	
+	
+	public Date getLastLogin(String p_userid,String p_sessionid){
+		
+		
+		
+		
+   jt.withProcedureName("HLCM_SP_GETLASTLOGIN").
+ declareParameters(
+		     new SqlParameter("p_UserId",Types.VARCHAR),
+		     new SqlParameter("p_SessionId",Types.VARCHAR),
+		       new SqlOutParameter("p_LoginDate", Types.DATE));
+
+       Map<String, Object> map=new HashMap<>();
+       map.put("p_UserId", p_userid);
+       map.put("p_SessionId", p_sessionid);
+       Map<String, Object> map1=  jt.execute(map);
+       //This is retriving cursor object(i.e is table data)
+       
+ 
+                  List<Map<String,Object>> list =  (List<Map<String, Object>>) map1.get("p_LoginDate");
+                 System.out.println(list);
+                  Map<String,Object> map5=list.get(0);
+                  //this will return all keys present in the table(cursour)
+                  System.out.println(map5.keySet());
+                  
+                  System.out.println(map5.get("l_TimeofAction"));
+                  //retriving values from map
+                  
+                  Date d=(Date) map5.get("l_TimeofAction");
+                  
+                 
+             
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+               
+       
+		
+		
+		return d;
+	}
+	
+	
 
 
 }
